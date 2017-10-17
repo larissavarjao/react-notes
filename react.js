@@ -66,4 +66,17 @@ ReactDOM.render(<h1>Hello World</h1>, document.getElementById('app'));
 //Babel compila o javascript
 
 //-------------------------AULA 6--------------------------
-
+//por convencao os componentes criados por React comecam com letra maiuscula
+var Title = React.createClass({
+    render: function(){
+        return <h1>Hello World</h1>
+    }
+}); //recebe por parametro um objeto
+//Para renderizar
+ReactDOM.render(<Title />, document.getElementById('app'));
+//Para aninhar ocorre da mesma forma.
+var Title = React.createClass({
+    render: function(){
+        return <h1><span>Hello World</span></h1>
+    }
+});
