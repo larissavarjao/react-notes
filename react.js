@@ -80,3 +80,11 @@ var Title = React.createClass({
         return <h1><span>Hello World</span></h1>
     }
 });
+
+//-------------------------AULA 10--------------------------
+
+//exportar um modulo
+module.exports = sum
+
+//solicitar um modulo
+var sum = require('./app')
