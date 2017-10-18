@@ -88,3 +88,17 @@ module.exports = sum
 
 //solicitar um modulo
 var sum = require('./app')
+//importanto o React
+var React = require('react')
+var ReactDOM = require('react-dom')
+
+//padrao de es2015 (JavaScript novo)
+export default Title
+import Title from './app'
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+//importa as propriedades dentro do ReactDOM, não necessata colocar ReactDOM
+import { render } from 'react-dom'
+
+
