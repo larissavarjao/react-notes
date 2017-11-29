@@ -5,54 +5,79 @@ import AppContent from './components/app-content'
 import ajax from '@fdaciuk/ajax'
 
 class App extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
       userinfo: null,
       repos: [],
-      starred: []
+      starred: [],
+      isFetching: false
     }
   }
 
-  handleSearch (e) {
+  handleSearch(e) {
     const value = e.target.value
     const keyCode = e.which || e.keyCode
     const ENTER = 13
+    this.setState({ isFetching: true })
+
     if (keyCode === ENTER) {
       ajax().get(`https://api.github.com/users/${value}`)
-      .then((result) => {
-        this.setState({
-          userinfo: {
-            username: result.name,
-            photo: result.avatar_url,
-            login: result.login,
-            repos: result.public_repos,
-            followers: result.followers,
-            following: result.following
-          }
+        .then((result) => {
+          this.setState({
+            userinfo: {
+              username: result.name,
+              photo: result.avatar_url,
+              login: result.login,
+              repos: result.public_repos,
+              followers: result.followers,
+              following: result.following
+            },
+            repos: [],
+            starred: []
+          })
         })
-        console.log(result)
-        // username: 'Larissa Varjão',
-        // photo: 'https://avatars1.githubusercontent.com/u/19149998?v=4',
-        // login: 'larissavarjao',
-        // repos: 12,
-        // followers: 10,
-        // following: 10
-
-        // {
-        //   name: 'Repo',
-        //   link: '#'
-        // }
-      })
+        .always(() => this.setState({ isFetching: false }))
     }
   }
 
-  render () {
+  handleAction(e) {
+    const value = e.target.value
+    if (value === 'repositorios') {
+      console.log(e.target.id)
+      ajax().get(`https://api.github.com/users/${this.state.userinfo.login}/repos`)
+        .then((result) => {
+          this.setState({
+            repos: result.map((repo) => {
+              return {
+                name: repo.name,
+                link: repo.html_url
+              }
+            })
+          })
+        })
+    } else if (value === 'favoritos') {
+      ajax().get(`https://api.github.com/users/${this.state.userinfo.login}/starred`)
+        .then((result) => {
+          this.setState({
+            repos: result.map((repo) => {
+              return {
+                name: repo.name,
+                link: repo.html_url
+              }
+            })
+          })
+        })
+    }
+  }
+
+  render() {
     return <AppContent
       userinfo={this.state.userinfo}
       repos={this.state.repos}
       starred={this.state.starred}
       handleSearch={(e) => this.handleSearch(e)}
+      handleAction={(e) => this.handleAction(e)}
     />
   }
 }
