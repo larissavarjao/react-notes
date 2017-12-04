@@ -379,3 +379,19 @@ e.persist()
 //calback(evento)
 //evento = null
 
+//SPREAD Operator - a sintaxe é a dos tres pontos. Ele espalha as propriedades de um objeto (spread)
+...obj = {
+    prop1: 1,
+    prop2: 2,
+    prop3: 3
+}
+//Funciona com: objetos, arrays, JSX (passar props) e funções (parametros rest)
+{...this.state } // passa todos os parametros do estado para a aplicacao, sem necessidade de dizer um a um.
+
+
+//TDD - test driven development (Desenvolvimento voltado para teste)
+/**
+ * Red - Escreva um teste para uma implementaçao inexistente e execute o teste. Ele vai quebrar.
+ * Green - Faça a implementacao no codigo e execute o teste. Ele deve passar.
+ * Refactor - (Azul) Existe codigo duplicado? Refatore. Nesse passo, nenhum teste anterior deve quebrar.
+ */
